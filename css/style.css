@@ -1,0 +1,20 @@
+.parallax-window{
+      min-height: 700px;
+      background: transparent;
+    }
+    .window-wrapper{
+      height: 400px;
+      background: #ffffff;
+    }
+    h1{
+      width: 700px
+    }
+   .container{
+    color: #333;
+    font-size: 15px;
+   }
+   .nav navbar-nav{
+    size: 500px;
+   }
+   
+   

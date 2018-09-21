@@ -1,0 +1,19 @@
+.parallax-window{
+      min-height: 700px;
+      background: transparent;
+    }
+    .window-wrapper{
+      height: 400px;
+      background: #ffffff;
+    }
+    h1{
+      text-align: center;
+    }
+
+   .container{
+    color: #333;
+    font-size: 15px;
+   }
+   .logo{
+    size: 50%;
+   }
