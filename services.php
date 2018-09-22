@@ -1,7 +1,6 @@
  <?php  
 include('connect.php');
-$query = "SELECT * From staff_comments";
- $result = mysqli_query($con, $query);  
+
  ?>  
  <!DOCTYPE html>  
  <html>  
@@ -12,7 +11,7 @@ $query = "SELECT * From staff_comments";
            <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
            <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
            <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-			<script src="js/bootstrap.min.js"></script>     
+      <script src="js/bootstrap.min.js"></script>     
            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />  
             <link rel="shortcut icon" type="image/png" href="images/logo.png"/>
       </head>  
@@ -106,7 +105,180 @@ $query = "SELECT * From staff_comments";
 
                                     <!-- MODAL MAINTENANCE -->
 
+                 <div class="row">
+              <div class="col-md-12"></div>
+              <div class="col-md-6">
+                <div class="container">
+                  <div class="row">
+                  <div class="col-md-1"></div>
+                    <div class="col-xs-14"><br>
+                      <button class="btn btn-warning btn-md"  data-target="#addModal" data-toggle="modal" style="background-color: #e6f9ff; color: black; font-weight: bold;">Add New</button>
+                      <div class="modal" id="addModal" tabindex="-1">
+                        <div class="modal-dialog">
+                          <div class="modal-content animated bounceIn">
+                            <div class="modal-header">
+                              <button class="close" data-dismiss="modal" >&times;</button>
+                              
+
+                            </div>
+                            <div class="modal-body">
+<?php 
+if(isset($_POST["btnn"])){
+
+  $name = $_POST["name"];
+  $lastname = $_POST["lastname"];
+  $mobile = $_POST["mobile"];
+  $request = $_POST["request"];
+  $a_name = $_POST["a_name"];
+  $pet_color = $_POST["pet_color"];
+  $pet_breed = $_POST["pet_breed"];
+  $complaint = $_POST["complaint"];
+  $start1 = $_POST["start1"];
+  $payment = $_POST["payment"];
+  
+
+  $sql = "INSERT INTO `staff_comments` (`id`, `firstname`, `lastname`, `mobile`, `request`, `a_name`, `pet_color`, `pet_breed`, `complaint`,  `start1`, `payment`, `staff_status`) VALUES (NULL, '$name', '$lastname', '$mobile', '$request', '$a_name', '$pet_color', '$pet_breed', '$complaint',  '$start1', '$payment', '1');";
+  $run_query = mysqli_query($con,$sql);
+  if($run_query){
+    header('Refresh:0; services.php');
+    
+    $message="Successfully Added";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+        echo"<script>close()</script>"; 
+  }
+
+}
+
+?>
+
+                        <form method="POST">
+
+                          <div class="form-group">
+                          <label>First Name</label>
+                  <input type="text" name="name" class="form-control">
+
+                          </div>
+
+                          <div class="form-group">
+                          <label>Last Name</label>
+                  <input type="text" name="lastname" class="form-control">
+
+                          </div>
+
+                          <div class="form-group">
+                          <label>Contact Number</label>
+                  <input type="number" name="mobile" class="form-control">
+
+                          </div>
+
+                          
+                          <div class="form-group">
+                          <label>Pet Name</label>
+                  <input type="text" name="a_name" class="form-control" placeholder="Pet Name">
+
+                          </div>
+                          <div class="form-group">
+                          <label>Pet Color</label>
+                  <input type="text" name="pet_color" class="form-control" placeholder="Pet Color">
+
+                          </div>
+
+                          <div class="form-group">
+                          <label>Pet Breed</label>
+                  <input type="text" name="pet_breed" class="form-control" placeholder="Pet Breed">
+
+                          </div>
+
+                          <?php
+                      $sql = "SELECT * From gender";
+                      $run_query = mysqli_query($con,$sql);
+                      
+                      ?>
+
               
+
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Gender</label>
+                  <select id="complaint" name="complaint" class="form-control">
+                        <option>Select Gender</option>
+                    
+                      <?php while ($row = mysqli_fetch_object($run_query)): ; ?>
+
+                      <option><?php echo $row->gender; ?></option>
+
+                      <?php endwhile; ?>
+
+                      </select>
+                      </div>
+              </div>
+
+                          <div class="form-group">
+                          <label>Date of Service</label>
+                  <input type="date" name="start1" class="form-control" value="<?php echo date('Y-m-d',strtotime('+ 0 days'))?>" readonly>
+
+                          </div>
+
+                          <div class="form-group">
+                          <label>Payment</label>
+                  <input type="number" name="payment" class="form-control">
+
+                          </div>
+
+                          <!--<div class="form-group">
+                          <label>Complaints</label>
+                  <input type="text" name="complaint" class="form-control" placeholder="Complaints">
+
+                          </div>-->
+
+                     <?php
+                      $sql = "SELECT * From pet_services";
+                      $run_query = mysqli_query($con,$sql);
+                      
+                      ?>
+
+                          <div class="row">
+                           <div class="col-md-6">
+                              <label>Services</label>
+                              <select id="request" name="request" class="form-control">
+                                    <option>Select Services</option>
+                                
+                                  <?php while ($row = mysqli_fetch_object($run_query)): ; ?>
+
+                                  <option><?php echo $row->serv_name; ?></option>
+
+                                  <?php endwhile; ?>
+
+                                  </select>
+                        </div>
+                      </div><br>
+
+                          <br><br>
+        
+
+
+                          <div class="form-group">
+                          
+                 
+
+                          </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                          <input type="submit" name="btnn" value="Submit" class="btn btn-primary">
+                              <button class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+  </form>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>  
+          </div>
                                   <!-- END of MODAL MAINTENANCE -->
 
                 <br />  
@@ -114,7 +286,7 @@ $query = "SELECT * From staff_comments";
                      <table id="employee_data" class="table table-striped table-bordered">  
                           <thead>  
                                <tr>  
-                               		<td>#</td>
+                                  <td>#</td>
                                     <td>First Name</td>  
                                     <td>Last Name</td>
                                     <td>Mobile Number</td> 
@@ -132,8 +304,10 @@ $query = "SELECT * From staff_comments";
                                </tr>  
                           </thead>  
                           <?php  
+                          $query = "SELECT * From staff_comments";
+                          $result = mysqli_query($con, $query);  
                           if(mysqli_num_rows($result)>0){
-                          	$i=1;
+                            $i=1;
 
                           while($row = mysqli_fetch_array($result))  
                           {  
@@ -142,7 +316,7 @@ $query = "SELECT * From staff_comments";
 
                                echo '  
                                <tr>  
-                               		<td>'.$i++.'</td>  
+                                  <td>'.$i++.'</td>  
                                     <td>'.$row["firstname"].'</td>  
                                     <td>'.$row["lastname"].'</td>
                                     <td>'.$row["mobile"].'</td>

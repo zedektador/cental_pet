@@ -45,7 +45,7 @@ if(isset($_POST["category"])){
 
 // product picture at iba pa sql
 if(isset($_POST["getProduct"])){
-	$product_query = "SELECT * FROM products ORDER BY RAND() LIMIT 0,9";
+	$product_query = "SELECT * FROM products WHERE stocks !=0 ORDER BY RAND() LIMIT 0,9";
 	$run_query = mysqli_query($con,$product_query);
 	if(mysqli_num_rows($run_query) > 0){
 		while($row = mysqli_fetch_array($run_query)){
@@ -78,13 +78,13 @@ if(isset($_POST["getProduct"])){
 if(isset($_POST["get_selected_Category"]) || isset($_POST["selectBrand"]) || isset($_POST["search"])){
 	if(isset($_POST["get_selected_Category"])){
 		$id=$_POST["cat_id"];
-		$sql = "SELECT * from products WHERE product_cat = '$id' ";
+		$sql = "SELECT * from products WHERE product_cat = '$id' AND stocks !=0 ";
 	}else if(isset($_POST['selectBrand'])){
 		$id=$_POST["brand_id"];
-		$sql = "SELECT * from products WHERE product_brand = '$id' ";
+		$sql = "SELECT * from products WHERE product_brand = '$id' AND stocks !=0";
 	}else {
 		$keyword=$_POST["keyword"];
-		$sql = "SELECT * from products WHERE product_keywords LIKE '%$keyword%' ";
+		$sql = "SELECT * from products WHERE product_keywords LIKE '%$keyword%' AND stocks !=0 ";
 	}
 
 
